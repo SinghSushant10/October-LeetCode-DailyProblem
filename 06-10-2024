@@ -4,7 +4,9 @@ class Solution {
     public boolean areSentencesSimilar(String s1, String s2) {
         // Ensure s1 is the longer string
         if (s1.length() < s2.length()) {
-            return   areSentencesSimilar( s2,  s1);
+            String temp = s1;
+            s1 = s2;
+            s2 = temp;
         }
 
         // Split the strings into Deques
