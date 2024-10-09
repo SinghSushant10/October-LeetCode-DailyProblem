@@ -1,0 +1,20 @@
+#921. Minimum Add to Make Parentheses Valid
+class Solution {
+    public int minAddToMakeValid(String s) {
+        int openCount = 0;
+        int closeCount = 0;
+
+        for (char ch : s.toCharArray()) { // Use parentheses to call the method
+            if (ch == '(') {
+                openCount++;
+            } else if (ch == ')') { // Add a check to ensure we only count valid closing brackets
+                if (openCount > 0) {
+                    openCount--; // Match a closing bracket with an opening bracket
+                } else {
+                    closeCount++; // Unmatched closing bracket
+                }
+            }
+        }
+        return openCount + closeCount; // Return the total number of unmatched brackets
+    }
+}
