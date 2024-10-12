@@ -1,3 +1,5 @@
+#2406. Divide Intervals Into Minimum Number of Groups
+
 class Solution {
     public int minGroups(int[][] intervals) {
         //sort intervals based on their starting points 
@@ -8,7 +10,8 @@ class Solution {
         for(int[] interval:intervals){
             int start = interval[0];
             int end = interval[1];
-        // Remove any groups that have ended before the current start
+        // If the top of the queue (smallest end time) is smaller than the current start time
+        // we can merge the interval into an existing group, so we pop the earliest end time
         if(!pq.isEmpty() && pq.peek()<start){
             pq.poll();
         }
