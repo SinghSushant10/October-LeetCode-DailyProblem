@@ -1,0 +1,41 @@
+#2530. Maximal Score After Applying K Operations
+
+class Solution {
+    // Function to calculate the maximum sum of k elements
+    public long maxKelements(int[] nums, int k) {
+        // Variable to store the sum of selected elements
+        long sum = 0;
+        
+        // Use a max-heap (priority queue) to store the elements in reverse order
+        // A priority queue by default in Java is a min-heap, but we need a max-heap.
+        // So, we use `Collections.reverseOrder()` to reverse the order of elements.
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        // Add all elements of the array 'nums' into the max-heap (priority queue)
+        for (int num : nums) {
+            pq.offer(num); // Adds the element to the priority queue
+        }
+        
+        // Process the top k elements from the max-heap
+        while (k > 0) {
+            // Poll the largest element from the heap (since it's a max-heap)
+            int maxEl = pq.poll();
+            
+            // Add the largest element to the sum
+            sum += maxEl;
+            
+            // Replace the element by adding back one-third of it (rounded up)
+            // The element is divided by 3.0 to get a double and then rounded up using Math.ceil.
+            maxEl = (int) Math.ceil(maxEl / 3.0);
+            
+            // Add the modified element back to the heap
+            pq.add(maxEl);
+            
+            // Decrease the counter for k
+            k--;
+        }
+        
+        // Return the accumulated sum after processing k elements
+        return sum;
+    }
+}
