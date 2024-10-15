@@ -1,0 +1,15 @@
+#2938. Separate Black and White Balls
+
+class Solution {
+    public long minimumSteps(String s) {
+        int last =0;
+        long swapCount=0;
+        for(int curr=0; curr<s.length(); curr++){
+            if(s.charAt(curr)=='0'){
+                swapCount = swapCount+(curr - last);
+                last++;
+            }
+        }
+        return swapCount;
+    }
+}
