@@ -1,0 +1,30 @@
+# 670. Maximum Swap
+class Solution {
+    public int maximumSwap(int num) {
+        // Convert the given integer num to a character array
+        char numArray[] = Integer.toString(num).toCharArray();
+        int n= numArray.length;
+        char maxElement = numArray[n-1];
+        int maxIndex = n-1;
+        // Variables to store the indices of the digits we need to swap
+        int swapIdx1= -1;
+        int swapIdx2= -1;
+        for(int i = n-2 ; i>=0;i--){
+            if(numArray[i]>maxElement){
+                maxElement=numArray[i];
+                maxIndex =i;
+            }
+            else if(numArray[i]<maxElement){
+                swapIdx1=i;
+                swapIdx2= maxIndex;
+            }
+        }
+        //swap
+        if(swapIdx1!=-1){
+            char temp= numArray[swapIdx1];
+            numArray[swapIdx1] = numArray[swapIdx2];
+            numArray[swapIdx2]=temp;
+        }
+        return Integer.parseInt(new String(numArray));
+    }
+}
