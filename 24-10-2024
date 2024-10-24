@@ -1,0 +1,37 @@
+#951. Flip Equivalent Binary Trees
+class Solution {
+    public boolean flipEquiv(TreeNode root1, TreeNode root2) {
+        TreeNode root1mirror = invert(root2);
+
+        if (issame(root1, root1mirror)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public TreeNode invert(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode left = invert(root.left);
+        TreeNode right = invert(root.right);
+
+        root.left = right;
+        root.right = left;
+
+        return root;
+    }
+
+    public boolean issame(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+
+        if (p == null || q == null || p.val != q.val) {
+            return false;
+        }
+
+        return (issame(p.left, q.left) && issame(p.right, q.right)) || (issame(p.left, q.right) && issame(p.right, q.left));
+    }
+}
