@@ -1,0 +1,40 @@
+#1671. Minimum Number of Removals to Make Mountain Array
+class Solution {
+    public int minimumMountainRemovals(int[] nums) {
+        int n = nums.length;
+        int[] prefixSum = new int[n];  // Longest Increasing Subsequence (LIS) ending at each index
+        int[] suffixSum = new int[n];  // Longest Decreasing Subsequence (LDS) starting at each index
+
+        // Compute LIS for each element in nums
+        for (int i = 0; i < n; i++) {
+            prefixSum[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    prefixSum[i] = Math.max(prefixSum[i], prefixSum[j] + 1);
+                }
+            }
+        }
+
+        // Compute LDS for each element in nums
+        for (int i = n - 1; i >= 0; i--) {
+            suffixSum[i] = 1;
+            for (int j = n - 1; j > i; j--) {
+                if (nums[j] < nums[i]) {
+                    suffixSum[i] = Math.max(suffixSum[i], suffixSum[j] + 1);
+                }
+            }
+        }
+
+        int minRemovals = Integer.MAX_VALUE;
+
+        // Calculate minimum removals required to form a valid mountain
+        for (int i = 1; i < n - 1; i++) {
+            if (prefixSum[i] > 1 && suffixSum[i] > 1) {  // Valid peak condition
+                int removals = n - (prefixSum[i] + suffixSum[i] - 1);
+                minRemovals = Math.min(minRemovals, removals);
+            }
+        }
+
+        return minRemovals;
+    }
+}
