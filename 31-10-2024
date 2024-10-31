@@ -1,0 +1,31 @@
+#2463. Minimum Total Distance Traveled
+class Solution {
+    private long[][][] dp;
+
+    public long minimumTotalDistance(List<Integer> robot, int[][] factory) {
+        Collections.sort(robot);
+        Arrays.sort(factory, (a, b) -> (a[0] - b[0]));
+        dp = new long[robot.size()][factory.length][robot.size()]; 
+        return helper(robot, factory, 0, 0, 0);
+    }
+
+    public long helper(List<Integer> robot, int[][] factory, int i, int j, int k) {
+        if (i == robot.size()) {
+            return 0;
+        }
+        if (j == factory.length) {
+            return Long.MAX_VALUE;
+        }
+        if (dp[i][j][k] > 0) {
+            return dp[i][j][k];
+        }
+        
+        long skip = helper(robot, factory, i, j + 1, 0);
+        int position = factory[j][0];
+        int limit = factory[j][1];  
+        
+        long use = limit > k ? helper(robot, factory, i + 1, j, k + 1) + Math.abs(robot.get(i) - position) : Long.MAX_VALUE / 2;
+        
+        return dp[i][j][k] = Math.min(skip, use);
+    }
+}
